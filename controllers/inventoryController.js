@@ -34,25 +34,31 @@ const createInventoryController = async (req, res) => {
 };
 
 // GET ALL BLOOD RECORS
-const getInventoryController = async (req, res) => {
+const getSlotController = async (req, res) => {
   try {
-    const inventory = await inventoryModel
-      .find({
-        organization: req.body.userId,
-      })
-      .populate("donar")
-      .populate("hospital")
-      .sort({ createdAt: -1 });
+    const { status } = req.query; // Use req.query for GET parameters
+
+    // Validate the status
+    const validStatuses = ["pending", "approved", "declined", "cancelled"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid status provided",
+      });
+    }
+
+    const slots = await slotModel.find({ status }).sort({ createdAt: -1 });
+
     return res.status(200).send({
       success: true,
-      messaage: "get all records successfully",
-      inventory,
+      message: "Get all slots successfully",
+      slots,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
       success: false,
-      message: "Error In Get All Inventory",
+      message: "Error in getting slots",
       error,
     });
   }
