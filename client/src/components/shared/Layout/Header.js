@@ -28,7 +28,12 @@ const Header = () => {
               <p className="nav-Link">
                 {" "}
                 <FaRegUserCircle />
-                Welcome {user?.name}
+                Welcome{" "}
+                {user?.name ||
+                  user?.hospitalName ||
+                  user?.organizationName}{" "}
+                &nbsp;
+                <span className="badge bg-secondary">{user?.role}</span>
               </p>
             </li>
             <li className="nav-item mx-3">

@@ -19,6 +19,11 @@ const inventorySchema = new mongoose.Schema(
       require: [true, "blood quanity is require"],
     },
 
+    donarEmail: {
+      type: String,
+      required: [true, "Donar email is required"],
+    },
+
     organization: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
